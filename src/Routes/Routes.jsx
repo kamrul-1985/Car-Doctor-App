@@ -9,6 +9,7 @@ import Contact from "../Component/Pages/Contact";
 import Service from "../Component/Pages/Service";
 import LogIn from "../Component/Shared/Register/LogIn";
 import SignUp from "../Component/Shared/Register/SignUp";
+import CheckOut from "../Component/Pages/CheckOut";
 
 const router = createBrowserRouter([
       {
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
         {
             path: '/signup',
             element:<SignUp></SignUp>
+        },
+        {
+            path: '/checkout/:id',
+            element:<CheckOut></CheckOut>,
+            loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`)
         },
         ]
       },

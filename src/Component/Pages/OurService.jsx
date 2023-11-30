@@ -6,8 +6,14 @@ const OurService = () => {
       const [services, setServices] = useState([]);
 
       useEffect(()=>{
+            fetch(`http://localhost:5000/services`,{
 
-            fetch("../../../public/Services.json")
+                  method: "GET",
+                  headers:{
+                       'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify()
+            })
             .then(res => res.json())
             .then(data =>{
                   setServices(data);

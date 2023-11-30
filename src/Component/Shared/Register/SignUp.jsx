@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
+import { useNavigate } from 'react-router-dom';
+// import { useAlert } from 'react-alert'
 
 const SignUp = () => {
+  const navigate = useNavigate();
 
   const {createUser} = useContext(AuthContext);
 
@@ -12,12 +15,32 @@ const handleSignIn= event =>{
       const name = from.name.value;
       const email = from.email.value;
       const password = from.password.value;
-      const user = {name, email, password}
-      console.log(user);
+      const user = {name, email, password};
+
       createUser(email, password)
-      .then(res =>{
+      .then(res => {
         const loggedUser = res.user;
-        console.log(loggedUser);
+        fetch(`http://localhost:5000/users`, {
+          method: 'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body:JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+          const loggedUser = data.user;
+          if(data.insertedId){
+            <div role="alert" className="alert alert-success">
+  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+  <span>Your purchase has been confirmed!</span>
+</div>
+          };
+          if (data){
+            navigate("/", { state: { key: "value" } });
+          }
+          from.reset();
+        })
       })
       .then(error =>{
         console.log(error);
@@ -33,7 +56,7 @@ const handleSignIn= event =>{
                     <label className="label">
                       <span className="label-text">Name</span>
                     </label>
-                    <input type="text" name ='name' placeholder="name" className="input input-bordered" required />
+                    <input type="text" name ="name" placeholder="name" className="input input-bordered" required />
                   </div>
                   <div className="form-control">
                     <label className="label">
@@ -45,7 +68,7 @@ const handleSignIn= event =>{
                     <label className="label">
                       <span className="label-text">Password</span>
                     </label>
-                    <input type="password" name='password' placeholder="password" className="input input-bordered" required />
+                    <input type="password" name="password" placeholder="password" className="input input-bordered" required />
                     <label className="label">
                       <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                     </label>
