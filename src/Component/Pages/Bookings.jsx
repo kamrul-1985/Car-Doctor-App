@@ -20,7 +20,9 @@ const Bookings = () => {
             })
             .then(res => res.json())
             .then(data =>{
-      setBookings(data)
+              if(!data.error){
+                setBookings(data)
+              }
             })
       },[url]);
 

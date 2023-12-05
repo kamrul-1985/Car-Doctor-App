@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
+import SocialLogIn from './SocialLogIn';
 
 
 const LogIn = () => {
@@ -23,19 +24,7 @@ const LogIn = () => {
               email: user.email
             }
             console.log(loggedUser);
-            fetch(`http://localhost:5000/jwt`,{
-              method: "POST",
-              headers:{
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(loggedUser)
-            })
-            .then(res =>res.json())
-            .then(data =>{
-              console.log(data);
-              localStorage.setItem('access-token', data.token)
-              navigate(from, { replace: true });
-            })
+            navigate(from, { replace: true });
             // If navigation is asynchronous, handle it here
             
           })
@@ -68,8 +57,10 @@ const LogIn = () => {
                     <button type='submit' className="btn btn-primary block">Login</button>
                   </div>
                 </form>
+                <div className='text-center'><SocialLogIn></SocialLogIn></div>
               </div>
             </div>
+            
           </div>
       );
 };
