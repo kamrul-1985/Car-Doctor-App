@@ -7,14 +7,21 @@ const NavBar = () => {
 
   const {user, logOut} = useContext(AuthContext);
   
+  const handleLogOut = () =>{
+         logOut();
+         localStorage.removeItem('access-token');
+  }
 
       const menu = <>
       <li><Link to='/'>Home</Link></li>
       <li><Link to='about'>About</Link></li>
       <li><Link to='contact'>Contact</Link></li>
       <li><Link to='service'>Services</Link></li>
-      <li><Link to='login'>LogIn</Link></li>
-      {user?<li><button onClick={logOut}>LogOut</button></li>:<li><Link to='signup'>SignUp</Link></li>}
+      {user? <div className='flex'><li><button onClick={handleLogOut}>LogOut</button></li>
+      <li><Link to="bookings">Your Bookings</Link></li></div> :
+     <div className='flex'>
+       <li><Link to='login'>LogIn</Link></li>
+      <li><Link to='signup'>SignUp</Link></li></div>}
       </>
       return (
             <div>

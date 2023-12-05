@@ -1,27 +1,31 @@
 import React, { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import {AuthContext} from '../Provider/AuthProvider';
 
 const CheckOut = () => {
   const {user} = useContext(AuthContext)
+  const navigate = useNavigate();
 
       const service = useLoaderData();
 
-      const {title, service_id, price} = service;
+      const {title, service_id, img,  price} = service;
       
       const handleBooking = event =>{
         event.preventDefault();
         const from = event.target;
-        const name = from.name.value;
-        const email = from.email.value;
         const phone = from.phone.value;
         const date = from.date.value;
+        const email = from.email.value;
         const booking = {
-          UserName: name,
-          UserEmail: email,
+           title,
+           service_id,
           date,
-          phone
+          phone,
+          img,
+          price,
+          email
         };
+        console.log(booking);
         fetch(`http://localhost:5000/checkout`,{
           method:"POST",
           headers:{
@@ -34,6 +38,7 @@ const CheckOut = () => {
   console.log(data);
   if(data.insertedId){
     alert('booking has been send to db')
+    navigate('/', {replace:true});
   }
 })
    }
@@ -43,18 +48,18 @@ const CheckOut = () => {
                   <h1 className='text-center text-green-900 text-5xl font-extrabold my-8'>Take Our {title} service</h1>
                   <form onSubmit={handleBooking}>
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-4 w-2/3 mx-auto bg-gray-200 p-8 rounded'>
-                        <div className="form-control">
+
+                  <div className="form-control">
                     <label className="label">
-                      <span className="label-text">Name</span>
+                      <span className="label-text">Email</span>
                     </label>
 
                     <input 
-                    type="text"
-                    name ="name" 
+                    type="email" 
+                    name ="email" 
+                    defaultValue={user?.email} 
                     className="input input-bordered" 
-                    defaultValue={user?.name}
                     required />
-
                   </div>
                   <div className="form-control">
                     <label className="label">
@@ -66,21 +71,8 @@ const CheckOut = () => {
                     name ="date"  
                     className="input input-bordered" 
                     required />
-
                   </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Email</span>
-                    </label>
 
-                    <input 
-                    type="email" 
-                    name ="email"  
-                    className="input input-bordered" 
-                    defaultValue={user?.email}
-                    required />
-
-                  </div>
                   <div className="form-control">
                     <label className="label">
                       <span className="label-text">Phone</span>
@@ -95,7 +87,7 @@ const CheckOut = () => {
                   </div>
                         </div>
                         <div className='my-5 w-2/3 mx-auto'>
-                        <button className='btn btn-block' type='submit'>submit</button>
+                        <button className='btn btn-block' type='submit'>Book service</button>
                         </div>
                   </form>
             </div>
