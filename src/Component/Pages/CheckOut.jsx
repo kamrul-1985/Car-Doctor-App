@@ -6,9 +6,10 @@ const CheckOut = () => {
   const {user} = useContext(AuthContext)
   const navigate = useNavigate();
 
-      const service = useLoaderData();
+      const services = useLoaderData();
+      console.log(services);
 
-      const {title, service_id, img,  price} = service;
+      const {title, service_id, img,  price} = services;
       
       const handleBooking = event =>{
         event.preventDefault();
@@ -26,7 +27,7 @@ const CheckOut = () => {
           email
         };
         console.log(booking);
-        fetch(`http://localhost:5000/checkout`,{
+        fetch(`https://car-doctor-server-phi-olive.vercel.app`,{
           method:"POST",
           headers:{
             'Content-Type':'application/json'

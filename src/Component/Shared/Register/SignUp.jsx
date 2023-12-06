@@ -22,7 +22,7 @@ const handleSignIn= event =>{
       createUser(email, password)
       .then(res => {
         const loggedUser = res.user;
-        fetch(`http://localhost:5000/users`, {
+        fetch(`https://localhost:5000https://car-doctor-server-phi-olive.vercel.app/users`, {
           method: 'POST',
           headers:{
             'Content-Type':'application/json'
