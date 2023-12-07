@@ -6,7 +6,7 @@ const OurService = () => {
       const [services, setServices] = useState([]);
 
       useEffect(()=>{
-            fetch(`https://car-doctor-server-phi-olive.vercel.app/services`,{
+            fetch(`http://localhost:5000/services`,{
 
                   method: "GET",
                   headers:{

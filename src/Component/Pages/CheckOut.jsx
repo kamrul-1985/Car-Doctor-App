@@ -17,7 +17,7 @@ const CheckOut = () => {
         const phone = from.phone.value;
         const date = from.date.value;
         const email = from.email.value;
-        const booking = {
+        const bookings = {
            title,
            service_id,
           date,
@@ -26,13 +26,13 @@ const CheckOut = () => {
           price,
           email
         };
-        console.log(booking);
-        fetch(`https://car-doctor-server-phi-olive.vercel.app`,{
+        console.log(bookings);
+        fetch(`http://localhost:5000/checkout`, {
           method:"POST",
           headers:{
             'Content-Type':'application/json'
           },
-          body: JSON.stringify(booking)
+          body: JSON.stringify(bookings)
         })
 .then(res => res.json())
 .then(data => {
